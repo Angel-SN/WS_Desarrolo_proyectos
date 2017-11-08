@@ -9,7 +9,7 @@ class Materias extends CI_Model {
 
 	public function insertar_materia($nombre_materia, $idperiodo)
 	{
-		$datos = array('nombre' => $nombre_materia, 'periodo_escolar_id' => $idperiodo);
+		$datos = array('Nombre' => $nombre_materia, 'periodo_escolar_id' => $idperiodo);
 		$query = $this->db->insert('materia', $datos);
 		if (query){
 			return $this->db->insert_id();

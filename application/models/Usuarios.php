@@ -14,7 +14,7 @@ class Usuarios extends CI_Model {
 			'nombre' => $nombre,
 			'contraseña' => $contrasenia
 		);
-		$query = $this->db->insert('usuario', $datos);
+		$query = $this->db->insert('Usuario', $datos);
 		if($query){
 			return $this->db->insert_id();
 		} else{
@@ -26,7 +26,7 @@ class Usuarios extends CI_Model {
 	{
 		$this->db->set('contraseña', $contraseña);
         $this->db->where('nombre', $nombre_usuario);
-        $Query = $this->db->update('usuario');
+        $Query = $this->db->update('Usuario');
         return $Query;
 	}
 
@@ -34,14 +34,14 @@ class Usuarios extends CI_Model {
 	{
 		$this->db->set('nombre', $nombre_nuevo);
         $this->db->where('nombre', $nombre_usuario);
-        $Query = $this->db->update('usuario');
+        $Query = $this->db->update('Usuario');
         return $Query;
 	}
 
 	public function select_usuario($nombre_usuario='')
 	{
 		$this->db->where('nombre', $nombre_usuario);
-		$usuario = $this->db->get('usuario')->row();
+		$usuario = $this->db->get('Usuario')->row();
 
 	}
 }
