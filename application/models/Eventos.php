@@ -10,9 +10,9 @@ class Eventos extends CI_Model {
 		//Do your magic here
 	}
 
-	public function insertar_evento($nombre='',$tipo='',$fecha='',$descripcion)
+	public function insertar_evento($nombre='',$tipo='',$fecha='',$descripcion, $idmateria)
 	{
-		$datos = array('nombre' => $nombre , 'tipo' => $tipo , 'fecha' => $fecha ,'descripcion' =>$descripcion);
+		$datos = array('nombre' => $nombre , 'tipo' => $tipo , 'fecha' => $fecha ,'Descripcion' =>$descripcion, 'Materia_idMateria' => $idmateria);
 		$query = $this->db->insert('Eventos', $datos);
 		if (query){
 			return $this->db->insert_id();
@@ -62,7 +62,7 @@ class Eventos extends CI_Model {
 
 	public function actualizar_evento_descripcion($descripcion,$nombre_usuario)
 	{
-		$this->db->set('descripcion', $descripcion);
+		$this->db->set('Descripcion', $descripcion);
         $this->db->from('Eventos');
 		$this->db->join('materia', 'Eventos.materia_idMateria = materia.idMateria', 'inner');
 		$this->db->join('periodo_escolar', 'materia.periodo_escolar_idperiodo_escolar_id = Periodo_escolar.idPeriodo_escolar', 'inner');

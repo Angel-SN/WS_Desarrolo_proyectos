@@ -9,7 +9,7 @@ class Materias extends CI_Model {
 
 	public function insertar_materia($nombre_materia, $idperiodo)
 	{
-		$datos = array('Nombre' => $nombre_materia, 'periodo_escolar_id' => $idperiodo);
+		$datos = array('Nombre' => $nombre_materia, 'Periodo_escolar_idPeriodo_escolar' => $idperiodo);
 		$query = $this->db->insert('materia', $datos);
 		if (query){
 			return $this->db->insert_id();
@@ -18,9 +18,9 @@ class Materias extends CI_Model {
 		}
 	}
 
-	public function insertar_calificacion($valor,$porcentaje,$periodo)
+	public function insertar_calificacion($valor,$porcentaje,$idmateria)
 	{
-		$datos = array('valor' => $valor, 'porcentaje', $porcentaje, 'materia_idMateria');
+		$datos = array('valor' => $valor, 'porcentaje' => $porcentaje, 'Materia_idMateria' => $idmateria);
 		$this->db->insert('calificacion', $datos);
 		if (query){
 			return $this->db->insert_id();
