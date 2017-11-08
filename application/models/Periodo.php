@@ -16,8 +16,8 @@ class Periodo extends CI_Model {
 		}
 	}
 
-	public function insertar_subperiodo($inicio_evaluaciones='',$fin_evaluaciones){
-		$datos = array('inicio_evaluaciones' => $inicio_evaluaciones , 'fin_evaluaciones' => $fin_evaluaciones );
+	public function insertar_subperiodo($inicio_evaluaciones='',$fin_evaluaciones, $idPeriodo_escolar){
+		$datos = array('inicio_evaluaciones' => $inicio_evaluaciones , 'fin_evaluaciones' => $fin_evaluaciones, 'Periodo_escolar_idPeriodo_escolar' => $idPeriodo_escolar);
 		$query = $this->db->insert('Sub_periodos', $datos);
 		if (query){
 			return $this->db->insert_id();
@@ -29,18 +29,18 @@ class Periodo extends CI_Model {
 	public function buscar_periodo($nombre_usuario='')
 	{
 		$this->db->select('usuario.nombre','Periodo_escolar.fecha_inicio','Periodo_escolar.fecha_fin','Sub_periodos.inicio_evaluaciones','Sub_periodos.fin_evaluaciones');
-		$this->db->from('usuario');
+		$this->db->from('Usuario');
 		$this->db->join('Periodo_escolar', 'usuario.idusuario = Periodo_escolar.usuario_idusuario', 'inner');
 		$this->db->join('Sub_periodos', 'Periodo_escolar.idPeriodo_escolar = P
 		Sub_periodos.Periodo_escolar_idPeriodo_escolar', 'inner');
 		$this->db->where('usuario.nombre', $nombre_usuario);
 		$query = $this->db->get();
 		if ($query) {
-			return query->row()
+			return query->row();
 		} else {
 			return 0;
 		}
-		
+
 
 	}
 }
