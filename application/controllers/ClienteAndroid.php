@@ -26,9 +26,9 @@ class ClienteAndroid extends REST_Controller {
             $this->response($data, REST_Controller::HTTP_BAD_REQUEST);
         } else {
             $usuario_nombre = $this->post('NombreUsuario');
-            $usuario_pass = $this->post('contraseña');
+            $usuario_pass = $this->post('Contraseña');
             $usuario = $this->Usuarios->insertar_usuario($usuario_nombre,$usuario_pass);
-            if(usuario != 1){
+            if($usuario != 1){
                 $data = array('flag' => TRUE, 'mensaje' => "usuario registrado");
                 $this->response($data, REST_Controller::HTTP_CREATED);
             } else{
