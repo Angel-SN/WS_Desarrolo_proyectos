@@ -30,14 +30,6 @@ class Usuarios extends CI_Model {
         return $Query;
 	}
 
-	public function actualizar_contrasena($nombre_usuario='',$nombre_nuevo)
-	{
-		$this->db->set('nombre', $nombre_nuevo);
-        $this->db->where('nombre', $nombre_usuario);
-        $Query = $this->db->update('Usuario');
-        return $Query;
-	}
-
 	public function select_usuario($nombre_usuario='')
 	{
 		$this->db->where('nombre', $nombre_usuario);
