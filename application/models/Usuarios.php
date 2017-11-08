@@ -30,11 +30,10 @@ class Usuarios extends CI_Model {
         return $Query;
 	}
 
-	public function select_usuario($nombre_usuario='')
+	public function buscar_usuario($nombre_usuario)
 	{
 		$this->db->where('nombre', $nombre_usuario);
 		$usuario = $this->db->get('Usuario')->row();
-
 	}
 }
 

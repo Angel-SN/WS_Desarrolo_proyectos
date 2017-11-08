@@ -37,7 +37,7 @@ class Materias extends CI_Model {
 		$this->db->where('idusuario', $nombre_materia);
 		$query = $this->db->get();
 		if (query){
-			return query->last_row()
+			return query->last_row();
 		} else{
 			return 0;
 		}
@@ -52,7 +52,7 @@ class Materias extends CI_Model {
 		$this->db->where('idusuario', $nombre_materia);
 		$query = $this->db->get();
 		if (query){
-			return query->last_row()
+			return query->last_row();
 		} else{
 			return 0;
 		}

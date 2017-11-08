@@ -19,7 +19,7 @@ class Eventos extends CI_Model {
 		} else{
 			return 0;
 		}
-		
+
 	}
 
 	public function actualizar_evento_nombre($nombre,$nombre_usuario)
@@ -75,14 +75,14 @@ class Eventos extends CI_Model {
 
 	public function borrar_evento($nombre,$nombre_usuario)
 	{
-		$evento = $this->buscar_evento_por_usuario($nombre,$nombre_usuario)
+		$evento = $this->buscar_evento_por_usuario($nombre,$nombre_usuario);
 		$this->db->where('idEventos', $evento -> idEvento);
 		$query = $this->db->delete('Eventos') ;
 		if(query){
 			return true;
 		}
 		else{
-			return false; 
+			return false;
 		}
 	}
 

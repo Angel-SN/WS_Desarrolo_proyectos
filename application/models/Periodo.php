@@ -6,7 +6,7 @@ class Periodo extends CI_Model {
 	{
 		parent::__construct();
 	}
-	public function insertar_periodo($fecha_inicio='',$fecha_fin, $idusuario){
+	public function insertar_periodo($fecha_inicio,$fecha_fin, $idusuario){
 		$datos = array('fecha_inicio' => $fecha_inicio , 'fecha_fin' => $fecha_fin, 'Usuario_idusuario' => $idusuarios);
 		$query = $this->db->insert('Periodo_escolar', $datos);
 		if (query){
@@ -16,7 +16,7 @@ class Periodo extends CI_Model {
 		}
 	}
 
-	public function insertar_subperiodo($inicio_evaluaciones='',$fin_evaluaciones, $idPeriodo_escolar){
+	public function insertar_subperiodo($inicio_evaluaciones,$fin_evaluaciones, $idPeriodo_escolar){
 		$datos = array('inicio_evaluaciones' => $inicio_evaluaciones , 'fin_evaluaciones' => $fin_evaluaciones, 'Periodo_escolar_idPeriodo_escolar' => $idPeriodo_escolar);
 		$query = $this->db->insert('Sub_periodos', $datos);
 		if (query){
@@ -24,9 +24,8 @@ class Periodo extends CI_Model {
 		} else{
 			return 0;
 		}
-
 	}
-	public function buscar_periodo($nombre_usuario='')
+	public function buscar_periodo($nombre_usuario)
 	{
 		$this->db->select('usuario.nombre','Periodo_escolar.fecha_inicio','Periodo_escolar.fecha_fin','Sub_periodos.inicio_evaluaciones','Sub_periodos.fin_evaluaciones');
 		$this->db->from('Usuario');
@@ -36,7 +35,7 @@ class Periodo extends CI_Model {
 		$this->db->where('usuario.nombre', $nombre_usuario);
 		$query = $this->db->get();
 		if ($query) {
-			return query->row();
+			return query->row_array();
 		} else {
 			return 0;
 		}
