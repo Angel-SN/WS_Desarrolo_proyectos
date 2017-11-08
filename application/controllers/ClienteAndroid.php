@@ -10,11 +10,30 @@ class ClienteAndroid extends REST_Controller {
     public function __construct()
     {
         parent::__construct();
-        //Do your magic here
+        $this->load->library('form_validation');
+        $this->load->model('Usuario');
     }
 
+    //registro
     public function usuario_post()
     {
-
+        $this->form_validation->set_rules('NombreUsuario', 'Nombre de Usuario', 'trim|required|is_unique[Usuario.nombre]');
+        $this->form_validation->set_rules('Contraseña', 'contraseña', 'trim|required|min_length[5]|max_length[12]');
+        if ($this->form_validation->run() == FALSE) {
+            $data = array('flag' => false);
+            $data = array_merge($data, $this->form_validation->error_array());
+            $this->response($data, REST_Controller::HTTP_BAD_REQUEST);
+        } else {
+            $usuario_nombre = $this->post('NombreUsuario');
+            $usuario_pass = $this->post('contraseña');
+            $usuario = $this->Usuario->insertar_usuario($usuario_nombre,$usuario_nombre);
+            if(usuario != 1){
+                $data = array('flag' => false, 'mensaje' => "usuario registrado");
+                $this->response($data, REST_Controller::HTTP_CREATED);
+            } else{
+                $data = array('flag' => false, 'mensaje' => "Erro en el proceso");
+                $this->response($data, REST_Controller::HTTP_NO_FOUND);
+            }
+        }
     }
 }
