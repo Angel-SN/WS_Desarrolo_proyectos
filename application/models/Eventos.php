@@ -1,8 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-include(Materia.php);
-
 class Eventos extends CI_Model {
 	public function __construct()
 	{
@@ -104,7 +102,6 @@ class Eventos extends CI_Model {
 
 	public function buscar_evento_por_materia($materia, $nombre_usuario)
 	{
-		Materia->
         $this->db->from('Eventos');
 		$this->db->join('materia', 'Eventos.materia_idMateria = materia.idMateria', 'inner');
 		$this->db->join('periodo_escolar', 'materia.periodo_escolar_idperiodo_escolar_id = Periodo_escolar.idPeriodo_escolar', 'inner');

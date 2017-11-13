@@ -6,8 +6,8 @@ class Periodo extends CI_Model {
 	{
 		parent::__construct();
 	}
-	public function insertar_periodo($fecha_inicio,$fecha_fin, $idusuario){
-		$datos = array('fecha_inicio' => $fecha_inicio , 'fecha_fin' => $fecha_fin, 'Usuario_idusuario' => $idusuarios);
+	public function insertar_periodo($fecha_inicio, $fecha_fin, $idusuario){
+		$datos = array('fecha_inicio' => $fecha_inicio , 'fecha_final' => $fecha_fin, 'Usuario_idusuario' => $idusuario);
 		$query = $this->db->insert('Periodo_escolar', $datos);
 		if ($query){
 			return $this->db->insert_id();
