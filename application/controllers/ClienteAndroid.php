@@ -12,7 +12,7 @@ class ClienteAndroid extends REST_Controller {
     {
         parent::__construct();
         $this->load->library('form_validation');
-        $this->load->model('Usuarios', 'Periodo', 'Materias');
+        $this->load->model('Usuarios');
     }
 
     // form_validation callback Function
@@ -36,12 +36,12 @@ class ClienteAndroid extends REST_Controller {
             $usuario_nombre = $this->post('NombreUsuario');
             $usuario_pass = $this->post('Contraseña');
             $usuario = $this->Usuarios->insertar_usuario($usuario_nombre,$usuario_pass);
-            if($usuario != 1){
+            if($usuario != 0){
                 $data = array('flag' => TRUE, 'mensaje' => "usuario registrado");
                 $this->response($data, REST_Controller::HTTP_CREATED);
             } else{
-                $data = array('flag' => FALSE, 'mensaje' => "Erro en el proceso");
-                $this->response($data, REST_Controller::HTTP_NO_FOUND);
+                $data = array('flag' => FALSE, 'mensaje' => "Error en el proceso");
+                $this->response($data, REST_Controller::HTTP_NOT_FOUND);
             }
         }
     }
@@ -54,7 +54,7 @@ class ClienteAndroid extends REST_Controller {
         if ($this->form_validation->run() == false) {
             $resp = array('flag' => FALSE);
             $resp = array_merge($resp, $this->form_validation->error_array());
-            $this->response($data, REST_Controller::HTTP_BAD_REQUEST);
+            $this->response($resp, REST_Controller::HTTP_BAD_REQUEST);
         } else {
             $usuario_nombre = $this->post('NombreUsuario');
             $usuario_pass = $this->post('Contraseña');
@@ -78,7 +78,7 @@ class ClienteAndroid extends REST_Controller {
         if ($this->form_validation->run() == false) {
             $resp = array('flag' => FALSE);
             $resp = array_merge($resp, $this->form_validation->error_array());
-            $this->response($data, REST_Controller::HTTP_BAD_REQUEST);
+            $this->response($resp, REST_Controller::HTTP_BAD_REQUEST);
         } else {
             $usuario_nombre = $this->post('NombreUsuario');
             $fecha_inicio = $this->post('Fecha_inicio');
