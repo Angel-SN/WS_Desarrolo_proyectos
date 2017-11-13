@@ -21,7 +21,7 @@ class Materias extends CI_Model {
 	public function insertar_calificacion($valor,$porcentaje,$idmateria)
 	{
 		$datos = array('valor' => $valor, 'porcentaje' => $porcentaje, 'Materia_idMateria' => $idmateria);
-		$this->db->insert('calificaciones', $datos);
+		$query = $this->db->insert('calificaciones', $datos);
 		if ($query){
 			return $this->db->insert_id();
 		} else{

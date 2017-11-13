@@ -177,7 +177,7 @@ class ClienteAndroid extends REST_Controller {
         if ($this->form_validation->run() == FALSE) {
             $resp = array('flag' => FALSE);
             $resp = array_merge($resp, $this->form_validation->error_array());
-            $this->response($data, REST_Controller::HTTP_BAD_REQUEST);
+            $this->response($resp, REST_Controller::HTTP_BAD_REQUEST);
         } else {
             $valor = $this->post('Valor');
             $porcentaje = $this->post('Porcentaje');
@@ -190,6 +190,35 @@ class ClienteAndroid extends REST_Controller {
                 $resp = array('flag' => true ,'mensaje' => "Error en el proceso");
                 $this->response($resp, REST_Controller::HTTP_NOT_FOUND);
             }
+        }
+    }
+
+    public function Eventos_post()
+    {
+        $this->form_validation->set_data($this->post());
+        $this->form_validation->set_rules('nombre', 'nombre', 'trim|required');
+        $this->form_validation->set_rules('tipo', 'tipo', 'trim|required');
+        $this->form_validation->set_rules('fecha', 'fecha', 'trim|required');
+        $this->form_validation->set_rules('Descripcion', 'Descripcion', 'trim|required');
+        $this->form_validation->set_rules('idMateria', 'idMateria', 'trim|required');
+        if ($this->form_validation->run() == FALSE) {
+            $resp = array('flag' => FALSE);
+            $resp = array_merge($resp, $this->form_validation->error_array());
+            $this->response($resp, REST_Controller::HTTP_BAD_REQUEST);
+        } else {
+            $nombre = $this->post('nombre');
+            $tipo = $this->post('tipo');
+            $fecha = $this->post('fecha');
+            $Descripcion = $this->post('Descripcion');
+            $idMateria = $this->post('idMateria');
+            $evento_id =  $this->Materias->insertar_evento($nombre, $tipo, $fecha, $Descripcion, $idMateria);
+            if ($evento_id != 0) {
+                $resp = array('flag' => true ,'mensaje' => "Calificacion insertada", 'id' => $evento_id);
+                $this->response($resp, REST_Controller::HTTP_CREATED);
+            } else {
+                $resp = array('flag' => true ,'mensaje' => "Error en el proceso");
+                $this->response($resp, REST_Controller::HTTP_NOT_FOUND);
+            }*/
         }
     }
 }

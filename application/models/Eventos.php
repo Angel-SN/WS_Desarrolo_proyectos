@@ -5,19 +5,23 @@ class Eventos extends CI_Model {
 	public function __construct()
 	{
 		parent::__construct();
-		//Do your magic here
 	}
 
-	public function insertar_evento($nombre='',$tipo='',$fecha='',$descripcion, $idmateria)
+	public function insertar_evento($nombre, $tipo, $fecha, $Descripcion, $idMateria)
 	{
-		$datos = array('nombre' => $nombre , 'tipo' => $tipo , 'fecha' => $fecha ,'Descripcion' =>$descripcion, 'Materia_idMateria' => $idmateria);
-		$query = $this->db->insert('Eventos', $datos);
+		$nuevo = array(
+			'nombre' => $nombre,
+			'tipo' => $tipo,
+			'fecha' => $fecha,
+			'Descripcion' => $Descripcion,
+			'Materia_idMateria' => $idMateria
+		);
+		$query = $this->db->insert('Eventos', $nuevo);
 		if ($query){
 			return $this->db->insert_id();
 		} else{
 			return 0;
 		}
-
 	}
 
 	public function actualizar_evento_nombre($nombre,$nombre_usuario)
