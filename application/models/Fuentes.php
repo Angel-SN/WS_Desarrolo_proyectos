@@ -22,10 +22,9 @@ class Fuentes extends CI_Model {
 	{
 		$this->db->where('tipo_Recurso', $tipo_recurso);
 		$fuentes = $this->db->get('Fuentes')->row();
-
-
+		return $fuentes;
 	}
-	
+
 
 }
 

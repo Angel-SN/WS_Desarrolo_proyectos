@@ -145,9 +145,9 @@ class ClienteAndroid extends REST_Controller {
 
     public function materias_post()
     {
-        $this->form_validation->setdata($this->post());
-        $this->form_validation->set_rules('Nombre_materia', 'fieldlabel', 'trim|required');
-        $this->form_validation->set_rules('Idperiodo', 'fieldlabel', 'trim|required');
+        $this->form_validation->set_data($this->post());
+        $this->form_validation->set_rules('Nombre_materia', 'nombre de la materia', 'trim|required');
+        $this->form_validation->set_rules('Idperiodo', 'identificador de periodo', 'trim|required');
         if ($this->form_validation->run() == FALSE) {
             $resp = array('flag' => FALSE);
             $resp = array_merge($resp, $this->form_validation->error_array());
@@ -170,10 +170,10 @@ class ClienteAndroid extends REST_Controller {
 
     public function calificacion_post()
     {
-        $this->form_validation->setdata($this->post());
-        $this->form_validation->set_rules('Valor', 'Valor', 'trim|required');
-        $this->form_validation->set_rules('Porcentaje', 'Porcentaje', 'trim|required');
-        $this->form_validation->set_rules('Idmateria', 'Idmateria', 'trim|required');
+        $this->form_validation->set_data($this->post());
+        $this->form_validation->set_rules('Valor', 'valor de la calificacion', 'trim|required');
+        $this->form_validation->set_rules('Porcentaje', 'Porcentaje total', 'trim|required');
+        $this->form_validation->set_rules('Idmateria', 'Id de la materia', 'trim|required');
         if ($this->form_validation->run() == FALSE) {
             $resp = array('flag' => FALSE);
             $resp = array_merge($resp, $this->form_validation->error_array());
