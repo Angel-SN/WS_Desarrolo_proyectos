@@ -34,6 +34,7 @@ class Usuarios extends CI_Model {
 	{
 		$this->db->where('nombre', $nombre_usuario);
 		$usuario = $this->db->get('Usuario')->row();
+		return $usuario;
 	}
 }
 

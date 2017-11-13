@@ -11,7 +11,7 @@ class Materias extends CI_Model {
 	{
 		$datos = array('Nombre' => $nombre_materia, 'Periodo_escolar_idPeriodo_escolar' => $idperiodo);
 		$query = $this->db->insert('materia', $datos);
-		if (query){
+		if ($query){
 			return $this->db->insert_id();
 		} else{
 			return 0;
@@ -22,7 +22,7 @@ class Materias extends CI_Model {
 	{
 		$datos = array('valor' => $valor, 'porcentaje' => $porcentaje, 'Materia_idMateria' => $idmateria);
 		$this->db->insert('calificacion', $datos);
-		if (query){
+		if ($query){
 			return $this->db->insert_id();
 		} else{
 			return 0;
@@ -36,8 +36,8 @@ class Materias extends CI_Model {
 		$this->db->join('Periodo_escolar', 'usuario.idusuario = Periodo_escolar.usuario_idusuario', 'inner');
 		$this->db->where('idusuario', $nombre_materia);
 		$query = $this->db->get();
-		if (query){
-			return query->last_row();
+		if ($query){
+			return $query->last_row();
 		} else{
 			return 0;
 		}
@@ -51,8 +51,8 @@ class Materias extends CI_Model {
 		$this->db->join('Periodo_escolar', 'usuario.idusuario = Periodo_escolar.usuario_idusuario', 'inner');
 		$this->db->where('idusuario', $nombre_materia);
 		$query = $this->db->get();
-		if (query){
-			return query->last_row();
+		if ($query){
+			return $query->last_row();
 		} else{
 			return 0;
 		}

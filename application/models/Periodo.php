@@ -9,7 +9,7 @@ class Periodo extends CI_Model {
 	public function insertar_periodo($fecha_inicio,$fecha_fin, $idusuario){
 		$datos = array('fecha_inicio' => $fecha_inicio , 'fecha_fin' => $fecha_fin, 'Usuario_idusuario' => $idusuarios);
 		$query = $this->db->insert('Periodo_escolar', $datos);
-		if (query){
+		if ($query){
 			return $this->db->insert_id();
 		} else{
 			return 0;
@@ -19,7 +19,7 @@ class Periodo extends CI_Model {
 	public function insertar_subperiodo($inicio_evaluaciones,$fin_evaluaciones, $idPeriodo_escolar){
 		$datos = array('inicio_evaluaciones' => $inicio_evaluaciones , 'fin_evaluaciones' => $fin_evaluaciones, 'Periodo_escolar_idPeriodo_escolar' => $idPeriodo_escolar);
 		$query = $this->db->insert('Sub_periodos', $datos);
-		if (query){
+		if ($query){
 			return $this->db->insert_id();
 		} else{
 			return 0;
@@ -35,7 +35,7 @@ class Periodo extends CI_Model {
 		$this->db->where('usuario.nombre', $nombre_usuario);
 		$query = $this->db->get();
 		if ($query) {
-			return query->row_array();
+			return $query->row_array();
 		} else {
 			return 0;
 		}

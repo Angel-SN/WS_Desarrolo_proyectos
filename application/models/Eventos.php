@@ -14,7 +14,7 @@ class Eventos extends CI_Model {
 	{
 		$datos = array('nombre' => $nombre , 'tipo' => $tipo , 'fecha' => $fecha ,'Descripcion' =>$descripcion, 'Materia_idMateria' => $idmateria);
 		$query = $this->db->insert('Eventos', $datos);
-		if (query){
+		if ($query){
 			return $this->db->insert_id();
 		} else{
 			return 0;
@@ -78,7 +78,7 @@ class Eventos extends CI_Model {
 		$evento = $this->buscar_evento_por_usuario($nombre,$nombre_usuario);
 		$this->db->where('idEventos', $evento -> idEvento);
 		$query = $this->db->delete('Eventos') ;
-		if(query){
+		if($query){
 			return true;
 		}
 		else{
@@ -95,8 +95,8 @@ class Eventos extends CI_Model {
 		$this->db->where('usuario.idusuario', $nombre_usuario);
 		$this->db->where('evento.nombre', $nombre);
 		$query = $this->db->get();
-		if (query) {
-			return query->row();
+		if ($query) {
+			return $query->row();
 		} else {
 			return 0;
 		}
@@ -112,8 +112,8 @@ class Eventos extends CI_Model {
 		$this->db->where('usuario.idusuario', $nombre_usuario);
 		$this->db->where('evento.nombre', $nombre);
 		$query = $this->db->get();
-		if (query) {
-			return query->row();
+		if ($query) {
+			return $query->row();
 		} else {
 			return 0;
 		}
@@ -128,8 +128,8 @@ class Eventos extends CI_Model {
 		$this->db->where('usuario.idusuario', $nombre_usuario);
 		$this->db->where('evento.fecha', $fecha);
 		$query = $this->db->get();
-		if (query) {
-			return query->row();
+		if ($query) {
+			return $query->row();
 		} else {
 			return 0;
 		}
@@ -144,8 +144,8 @@ class Eventos extends CI_Model {
 		$this->db->where('usuario.idusuario', $nombre_usuario);
 		$this->db->where('evento.nombre', $tipo);
 		$query = $this->db->get();
-		if (query) {
-			return query->row();
+		if ($query) {
+			return $query->row();
 		} else {
 			return 0;
 		}
