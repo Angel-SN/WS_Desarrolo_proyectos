@@ -12,7 +12,11 @@ class ClienteAndroid extends REST_Controller {
     {
         parent::__construct();
         $this->load->library('form_validation');
+<<<<<<< HEAD
         $this->load->model(array('Usuarios','Materias','Eventos','Periodo'));
+=======
+        $this->load->model('Usuarios');
+>>>>>>> f17386e58f3abd1bf56c6ff23429fe221125c342
     }
 
     // form_validation callback Function
