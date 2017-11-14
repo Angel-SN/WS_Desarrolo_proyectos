@@ -211,14 +211,14 @@ class ClienteAndroid extends REST_Controller {
             $fecha = $this->post('fecha');
             $Descripcion = $this->post('Descripcion');
             $idMateria = $this->post('idMateria');
-            $evento_id =  $this->Materias->insertar_evento($nombre, $tipo, $fecha, $Descripcion, $idMateria);
+            $evento_id =  $this->Eventos->insertar_evento($nombre, $tipo, $fecha, $Descripcion, $idMateria);
             if ($evento_id != 0) {
                 $resp = array('flag' => true ,'mensaje' => "Calificacion insertada", 'id' => $evento_id);
                 $this->response($resp, REST_Controller::HTTP_CREATED);
             } else {
                 $resp = array('flag' => true ,'mensaje' => "Error en el proceso");
                 $this->response($resp, REST_Controller::HTTP_NOT_FOUND);
-            }*/
+            }
         }
     }
 }
