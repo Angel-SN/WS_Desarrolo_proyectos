@@ -30,7 +30,7 @@ class Eventos extends CI_Model {
         $this->db->from('Eventos');
 		$this->db->join('materia', 'Eventos.materia_idMateria = materia.idMateria', 'inner');
 		$this->db->join('periodo_escolar', 'materia.periodo_escolar_idperiodo_escolar_id = Periodo_escolar.idPeriodo_escolar', 'inner');
-		$this->db->join('Periodo_escolar', 'usuario.idusuario = Periodo_escolar.usuario_idusuario', 'inner');
+		$this->db->join('usuario', 'usuario.idusuario = Periodo_escolar.usuario_idusuario', 'inner');
 		$this->db->where('idusuario', $nombre_usuario);
 		$query = $this->db->update();
 		$respuesta = ($query) ? true : false ;
@@ -42,7 +42,7 @@ class Eventos extends CI_Model {
         $this->db->from('Eventos');
 		$this->db->join('materia', 'Eventos.materia_idMateria = materia.idMateria', 'inner');
 		$this->db->join('periodo_escolar', 'materia.periodo_escolar_idperiodo_escolar_id = Periodo_escolar.idPeriodo_escolar', 'inner');
-		$this->db->join('Periodo_escolar', 'usuario.idusuario = Periodo_escolar.usuario_idusuario', 'inner');
+		$this->db->join('usuario', 'usuario.idusuario = Periodo_escolar.usuario_idusuario', 'inner');
 		$this->db->where('idusuario', $nombre_usuario);
 		$query = $this->db->update();
 		$respuesta = ($query) ? true : false ;
@@ -55,7 +55,7 @@ class Eventos extends CI_Model {
         $this->db->from('Eventos');
 		$this->db->join('materia', 'Eventos.materia_idMateria = materia.idMateria', 'inner');
 		$this->db->join('periodo_escolar', 'materia.periodo_escolar_idperiodo_escolar_id = Periodo_escolar.idPeriodo_escolar', 'inner');
-		$this->db->join('Periodo_escolar', 'usuario.idusuario = Periodo_escolar.usuario_idusuario', 'inner');
+		$this->db->join('usuario', 'usuario.idusuario = Periodo_escolar.usuario_idusuario', 'inner');
 		$this->db->where('idusuario', $nombre_usuario);
 		$query = $this->db->update();
 		$respuesta = ($query) ? true : false ;
@@ -68,7 +68,7 @@ class Eventos extends CI_Model {
         $this->db->from('Eventos');
 		$this->db->join('materia', 'Eventos.materia_idMateria = materia.idMateria', 'inner');
 		$this->db->join('periodo_escolar', 'materia.periodo_escolar_idperiodo_escolar_id = Periodo_escolar.idPeriodo_escolar', 'inner');
-		$this->db->join('Periodo_escolar', 'usuario.idusuario = Periodo_escolar.usuario_idusuario', 'inner');
+		$this->db->join('usuario', 'usuario.idusuario = Periodo_escolar.usuario_idusuario', 'inner');
 		$this->db->where('idusuario', $nombre_usuario);
 		$query = $this->db->update();
 		$respuesta = ($query) ? true : false ;
@@ -88,19 +88,34 @@ class Eventos extends CI_Model {
 		}
 	}
 
-	public function buscar_evento_por_usuario($nombre, $nombre_usuario)
+	public function buscar_eventos($nombre_usuario)
+	{
+		$this->db->from('Eventos');
+		$this->db->join('materia', 'Eventos.materia_idMateria = materia.idMateria', 'inner');
+		$this->db->join('periodo_escolar', 'materia.periodo_escolar_idperiodo_escolar_id = Periodo_escolar.idPeriodo_escolar', 'inner');
+		$this->db->join('usuario', 'usuario.idusuario = Periodo_escolar.usuario_idusuario', 'inner');
+		$this->db->where('usuario.idusuario', $nombre_usuario);
+		$query = $this->db->get();
+		if ($query) {
+			return $query->result();
+		} else {
+			return null;
+		}
+	}
+
+	public function buscar_evento_por_nombre($nombre, $nombre_usuario)
 	{
         $this->db->from('Eventos');
 		$this->db->join('materia', 'Eventos.materia_idMateria = materia.idMateria', 'inner');
 		$this->db->join('periodo_escolar', 'materia.periodo_escolar_idperiodo_escolar_id = Periodo_escolar.idPeriodo_escolar', 'inner');
-		$this->db->join('Periodo_escolar', 'usuario.idusuario = Periodo_escolar.usuario_idusuario', 'inner');
+		$this->db->join('usuario', 'usuario.idusuario = Periodo_escolar.usuario_idusuario', 'inner');
 		$this->db->where('usuario.idusuario', $nombre_usuario);
 		$this->db->where('evento.nombre', $nombre);
 		$query = $this->db->get();
 		if ($query) {
-			return $query->row();
+			return $query->result();
 		} else {
-			return 0;
+			return null;
 		}
 	}
 
@@ -109,14 +124,14 @@ class Eventos extends CI_Model {
         $this->db->from('Eventos');
 		$this->db->join('materia', 'Eventos.materia_idMateria = materia.idMateria', 'inner');
 		$this->db->join('periodo_escolar', 'materia.periodo_escolar_idperiodo_escolar_id = Periodo_escolar.idPeriodo_escolar', 'inner');
-		$this->db->join('Periodo_escolar', 'usuario.idusuario = Periodo_escolar.usuario_idusuario', 'inner');
+		$this->db->join('usuario', 'usuario.idusuario = Periodo_escolar.usuario_idusuario', 'inner');
 		$this->db->where('usuario.idusuario', $nombre_usuario);
-		$this->db->where('evento.nombre', $nombre);
+		$this->db->where('evento.nombre', $materia);
 		$query = $this->db->get();
 		if ($query) {
-			return $query->row();
+			return $query->result();
 		} else {
-			return 0;
+			return null;
 		}
 	}
 
@@ -125,14 +140,14 @@ class Eventos extends CI_Model {
         $this->db->from('Eventos');
 		$this->db->join('materia', 'Eventos.materia_idMateria = materia.idMateria', 'inner');
 		$this->db->join('periodo_escolar', 'materia.periodo_escolar_idperiodo_escolar_id = Periodo_escolar.idPeriodo_escolar', 'inner');
-		$this->db->join('Periodo_escolar', 'usuario.idusuario = Periodo_escolar.usuario_idusuario', 'inner');
+		$this->db->join('usuario', 'usuario.idusuario = Periodo_escolar.usuario_idusuario', 'inner');
 		$this->db->where('usuario.idusuario', $nombre_usuario);
 		$this->db->where('evento.fecha', $fecha);
 		$query = $this->db->get();
 		if ($query) {
-			return $query->row();
+			return $query->result();
 		} else {
-			return 0;
+			return null;
 		}
 	}
 
@@ -141,14 +156,14 @@ class Eventos extends CI_Model {
         $this->db->from('Eventos');
 		$this->db->join('materia', 'Eventos.materia_idMateria = materia.idMateria', 'inner');
 		$this->db->join('periodo_escolar', 'materia.periodo_escolar_idperiodo_escolar_id = Periodo_escolar.idPeriodo_escolar', 'inner');
-		$this->db->join('Periodo_escolar', 'usuario.idusuario = Periodo_escolar.usuario_idusuario', 'inner');
+		$this->db->join('usuario', 'usuario.idusuario = Periodo_escolar.usuario_idusuario', 'inner');
 		$this->db->where('usuario.idusuario', $nombre_usuario);
 		$this->db->where('evento.nombre', $tipo);
 		$query = $this->db->get();
 		if ($query) {
-			return $query->row();
+			return $query->result();
 		} else {
-			return 0;
+			return null;
 		}
 	}
 

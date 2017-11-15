@@ -69,6 +69,29 @@ class ClienteAndroid extends REST_Controller {
         }
     }
 
+    public function usuario_contraseña_put()
+    {
+        $this->form_validation->set_data($this->post());
+        $this->form_validation->set_rules('NombreUsuario', 'Nombre de Usuario', 'trim|required|callback_usuarioExistente');
+        $this->form_validation->set_rules('Contraseña', 'contraseña', 'trim|required|min_length[5]|max_length[12]');
+        if ($this->form_validation->run() == FALSE) {
+            $data = array('flag' => FALSE);
+            $data = array_merge($data, $this->form_validation->error_array());
+            $this->response($data, REST_Controller::HTTP_BAD_REQUEST);
+        } else {
+            $usuario_nombre = $this->post('NombreUsuario');
+            $usuario_pass = $this->post('Contraseña');
+            $usuario = $this->Usuarios->actualizar_contrasena($usuario_nombre, $usuario_pass);
+            if($usuario != FALSE){
+                $data = array('flag' => TRUE, 'mensaje' => "contraseña actualizada");
+                $this->response($data, REST_Controller::HTTP_OK);
+            } else{
+                $data = array('flag' => FALSE, 'mensaje' => "Error en el proceso");
+                $this->response($data, REST_Controller::HTTP_NOT_FOUND);
+            }
+        }
+    }
+
     public function periodo_post()
     {
         $this->form_validation->set_data($this->post());
@@ -135,7 +158,7 @@ class ClienteAndroid extends REST_Controller {
             if($resp != null){
                 $msj = array('flag' => true ,'mensaje' => "datos encontados");
                 $resp = array_merge($msj,$resp);
-                $this->response($resp, REST_Controller::HTTP_CREATED);
+                $this->response($resp, REST_Controller::HTTP_OK);
             }else{
                 $resp = array('flag' => true ,'mensaje' => "Datos no encontrados");
                 $this->response($resp, REST_Controller::HTTP_NOT_FOUND);
@@ -166,7 +189,27 @@ class ClienteAndroid extends REST_Controller {
         }
     }
 
-
+    public function materias_get()
+    {
+        $this->form_validation->set_data($this->get());
+        $this->form_validation->set_rules('NombreUsuario', 'Nombre de Usuario', 'trim|required|callback_usuarioExistente');
+        $this->form_validation->set_message('usuarioExistente','El Usuario no Existe');
+        if ($this->form_validation->run() == FALSE) {
+            $resp = array('flag' => FALSE);
+            $resp = array_merge($resp, $this->form_validation->error_array());
+            $this->response($data, REST_Controller::HTTP_BAD_REQUEST);
+        } else {
+            $usuario_nombre = $this->get('NombreUsuario');
+            $usuario = $this->Usuarios->buscar_usuario($usuario_nombre);
+            $materias = $this->Materias->buscar_materia($usuario->idusuario);
+            if ($materias != null) {
+                $this->response($materias, REST_Controller::HTTP_OK);
+            } else {
+                $resp = array('flag' => true ,'mensaje' => "Error en el proceso");
+                $this->response($resp, REST_Controller::HTTP_NOT_FOUND);
+            }
+        }
+    }
 
     public function calificacion_post()
     {
@@ -193,7 +236,31 @@ class ClienteAndroid extends REST_Controller {
         }
     }
 
-    public function Eventos_post()
+    public function calificaciones_get()
+    {
+        $this->form_validation->set_data($this->get());
+        $this->form_validation->set_rules('NombreUsuario', 'Nombre de Usuario', 'trim|required|callback_usuarioExistente');
+        $this->form_validation->set_message('usuarioExistente','El Usuario no Existe');
+        $this->$this->form_validation->set_rules('NombreMateria', 'Nombre de la materia', 'trim|required');
+        if ($this->form_validation->run() == FALSE) {
+            $resp = array('flag' => FALSE);
+            $resp = array_merge($resp, $this->form_validation->error_array());
+            $this->response($data, REST_Controller::HTTP_BAD_REQUEST);
+        } else {
+            $usuario_nombre = $this->get('NombreUsuario');
+            $usuario = $this->Usuarios->buscar_usuario($usuario_nombre);
+            $materia_nombre = $this->post('NombreMateria');
+            $calificaciones = $this->Materias->buscar_calificaciones($usuario->idusuario, $materia_nombre);
+            if ($calificaciones != null) {
+                $this->response($calificaciones, REST_Controller::HTTP_OK);
+            } else {
+                $resp = array('flag' => true ,'mensaje' => "Error en el proceso");
+                $this->response($resp, REST_Controller::HTTP_NOT_FOUND);
+            }
+        }
+    }
+
+    public function eventos_post()
     {
         $this->form_validation->set_data($this->post());
         $this->form_validation->set_rules('nombre', 'nombre', 'trim|required');
@@ -219,6 +286,88 @@ class ClienteAndroid extends REST_Controller {
                 $resp = array('flag' => true ,'mensaje' => "Error en el proceso");
                 $this->response($resp, REST_Controller::HTTP_NOT_FOUND);
             }
+        }
+    }
+
+    public function eventos_get()
+    {
+        $nombre_usuario =$this->get('NombreUsuario');
+        if ($nombre_usuario != null) {
+
+            if(!usuarioExistente($nombre_usuario)){
+                $resp = array(
+                    'flag' => FALSE,
+                    'mensaje' => "El usuario no Existe"
+                );
+                $this->response($resp, REST_Controller::HTTP_BAD_REQUEST);
+            }
+
+            $evento_nombre = $this->get('NombreEvento');
+
+            if ($evento_nombre != null) {
+                $resp = $this->Eventos->buscar_evento_por_nombre($evento_nombre, $nombre_usuario);
+                if ($resp != null) {
+                    $this->response($resp, REST_Controller::HTTP_OK);
+                } else {
+                    $resp = array(
+                        'flag' => FALSE,
+                        'mensaje' => "no se encuentra el evento"
+                    );
+                    $this->response($resp, REST_Controller::HTTP_NOT_FOUND);
+                }
+            }
+
+            $evento_materia = $this->get('Materia');
+
+            if ($evento_materia != null) {
+                $resp = $this->Eventos->buscar_evento_por_materia($evento_materia, $nombre_usuario);
+                if ($resp != null) {
+                    $this->response($resp, REST_Controller::HTTP_OK);
+                } else {
+                    $resp = array(
+                        'flag' => FALSE,
+                        'mensaje' => "no se encuentran eventos de esa materia"
+                    );
+                    $this->response($resp, REST_Controller::HTTP_NOT_FOUND);
+                }
+            }
+
+            $evento_fecha = $this->get('Fecha');
+
+            if ($evento_fecha != null) {
+                $resp = $this->Eventos->buscar_evento_por_fecha($evento_fecha, $nombre_usuario);
+                if ($resp != null) {
+                    $this->response($resp, REST_Controller::HTTP_OK);
+                } else {
+                    $resp = array(
+                        'flag' => FALSE,
+                        'mensaje' => "no se encuentran eventos de esa fecha"
+                    );
+                    $this->response($resp, REST_Controller::HTTP_NOT_FOUND);
+                }
+            }
+
+            $evento_tipo = $this->get('Tipo');
+
+            if ($evento_tipo != null) {
+                $resp = $this->Eventos->buscar_evento_por_tipo($evento_tipo, $nombre_usuario);
+                if ($resp != null) {
+                    $this->response($resp, REST_Controller::HTTP_OK);
+                } else {
+                    $resp = array(
+                        'flag' => FALSE,
+                        'mensaje' => "no se encuentran eventos de ese tipo"
+                    );
+                    $this->response($resp, REST_Controller::HTTP_NOT_FOUND);
+                }
+            }
+        }
+        else{
+            $resp = array(
+                'flag' => FALSE,
+                'mensaje' => "Falta numero de usuario"
+            );
+            $this->response($resp, REST_Controller::HTTP_BAD_REQUEST);
         }
     }
 }

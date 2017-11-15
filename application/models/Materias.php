@@ -29,30 +29,31 @@ class Materias extends CI_Model {
 		}
 	}
 
-	public function buscar_materia($nombre_usuario='')
+	public function buscar_materia($id_usuario)
 	{
 		$this->db->from('materia');
 		$this->db->join('periodo_escolar', 'materia.periodo_escolar_idperiodo_escolar_id = Periodo_escolar.idPeriodo_escolar', 'inner');
-		$this->db->join('Periodo_escolar', 'usuario.idusuario = Periodo_escolar.usuario_idusuario', 'inner');
-		$this->db->where('idusuario', $nombre_materia);
+		$this->db->join('usuario', 'usuario.idusuario = Periodo_escolar.usuario_idusuario', 'inner');
+		$this->db->where('idusuario', $id_usuario);
 		$query = $this->db->get();
 		if ($query){
-			return $query->last_row();
+			return $query->result();
 		} else{
 			return 0;
 		}
 	}
 
-	public function buscar_calificaciones($nombre_usuario='')
+	public function buscar_calificaciones($id_usuario, $nombre_materia)
 	{
 		$this->db->from('calificaciones');
 		$this->db->join('materia', 'calificaciones.materia_idMateria = materia.idMateria', 'inner');
 		$this->db->join('periodo_escolar', 'materia.periodo_escolar_idperiodo_escolar_id = Periodo_escolar.idPeriodo_escolar', 'inner');
-		$this->db->join('Periodo_escolar', 'usuario.idusuario = Periodo_escolar.usuario_idusuario', 'inner');
-		$this->db->where('idusuario', $nombre_materia);
+		$this->db->join('usuario', 'usuario.idusuario = Periodo_escolar.usuario_idusuario', 'inner');
+		$this->db->where('usuario.idusuario', $id_usuario);
+		$this->db->where('materia.Nombre', $nombre_materia);
 		$query = $this->db->get();
 		if ($query){
-			return $query->last_row();
+			return $query->result();
 		} else{
 			return 0;
 		}
