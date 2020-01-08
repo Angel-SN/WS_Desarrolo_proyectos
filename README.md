@@ -1,4 +1,4 @@
-# Rest Server para desarrollo de proyectos
+# Rest Server para app
 
 webservice para aplicacionmovil basado en codeignater
 
